@@ -1,4 +1,4 @@
-import mnist as mnist
+# import mnist as mnist
 import numpy as np
 import tensorflow as tf
 import matplotlib.pyplot as plt
@@ -45,7 +45,7 @@ def multilayer_perceptron(_X,_weight,_biases):
 
 pred = multilayer_perceptron(x,weight,biases)
 
-cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(pred,y))
+cost = tf.reduce_mean(tf.nn.softmax_cross_entropy_with_logits(labels=y,logits=pred))
 optm = tf.train.GradientDescentOptimizer(learning_rate=0.001).minimize(cost)
 corr = tf.equal(tf.argmax(pred,1),tf.argmax(y,1))
 accr = tf.reduce_mean(tf.cast(corr,"float"))
@@ -61,7 +61,7 @@ sess.run(init)
 
 for epoch in range(training_epochs):
   avg_cost =0.
-  total_batch = int(mnist.train.num_example/batch_size)
+  total_batch = int(mnist.train.num_examples/batch_size)
   for i in range(total_batch):
       batch_xs,batch_ys = mnist.train.next_batch(batch_size)
       feeds = {x:batch_xs,y:batch_ys}
